@@ -1,0 +1,23 @@
+-content_for :extra_header do
+  =auto_discovery_link_tag(:rss, 'http://feeds.feedburner.com/RecipeTreesFeed', {:title => "RecipeTrees Feed"})
+
+.grid_11.suffix_1
+  %span.rss= link_to(image_tag('rss_feed.png'), 'http://feeds.feedburner.com/RecipeTreesFeed')
+  %h1 Recipe Trees Feed
+  -for action in @actions
+    -next if action.action == 'following'
+    .activity
+      %span.date=action.created_at.strftime('%Y %b %e -')
+      -if action.user_id.to_i > 0
+        %span.user_name= link_to action.user.name, profile_path(action.user) unless action.item.is_a?(Follower)
+      %span.description= render_activity_description(action)
+  =will_paginate @actions
+
+#tags.grid_4
+  %h4 All Recipe Tags
+  -cache(:action => :index, :action_suffix => 'tags') do
+    -tag_cloud @tags, %w(css1 css2 css3 css4) do |tag, css_class|
+      =link_to h(tag.name), { :controller => 'recipes',  :action => :filter, :filter => "t:#{tag.id}:#{tag.name}" }, :class => css_class,  :method => :post
+
+:javascript
+  recipeImageFeedPopups();

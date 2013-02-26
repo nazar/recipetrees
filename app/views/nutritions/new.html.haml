@@ -1,0 +1,22 @@
+%div{:id => "foods_#{@ingredient.id}", :class => 'foods'}
+  -unless @foods.blank?
+    %table
+      %tr
+        %th &nbsp;
+        %th Name
+        %th Description
+        %th Brand
+      -for food in @foods
+        %tr{:class => cycle('even','')}
+          %td=radio_button_tag('food', food['food_id'], false, :class => 'food', :data_ingredient => @ingredient.id)
+          %td=food['food_name']
+          %td=food['food_description']
+          %td=food['brand_name']
+
+    =javascript_tag "hookFoodRadio($j('#foods_'+#{@ingredient.id}));"
+
+  -else
+    %p Lookup yielded no results
+
+%div{:id => "servings_#{@ingredient.id}", :class => 'servings'}
+

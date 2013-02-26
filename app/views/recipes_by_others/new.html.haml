@@ -1,0 +1,2 @@
+-form_for @by_others, :url => recipe_by_others_path(@recipe), :html => {:multipart => true, :class => 'styled'} do |f|
+  =render :partial => 'recipes_by_others/form', :locals => {:f => f}

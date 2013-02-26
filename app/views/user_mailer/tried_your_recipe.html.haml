@@ -1,0 +1,3 @@
+%p Hi #{@recipe_owner.name}.
+%p #{link_to @current_user.name, profile_url(@current_user)} has just tried your #{link_to @recipe.name, recipe_url(@recipe, :anchor => 'by_others')}.
+%p Yours, the RecipeTree team.

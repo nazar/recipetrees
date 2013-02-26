@@ -1,0 +1,66 @@
+.avatar.grid_4
+  -panel(4) do
+    =render :partial => '/users/panel_profile', :locals => {:user => current_user}
+  -panel(4) do
+    .action_button
+      =icon_text_button("http://www.facebook.com/profile.php?id=#{current_user.facebook_id}", image_tag('facebook_32.png', :alt => 'Facebook Profile'), 'Facebook Profile' )
+  -panel(4) do
+    %div Joined: #{time_ago_in_words(current_user.created_at)} ago
+    %div Badges: #{@badges.length}
+    %div Reputation: #{current_user.reputation_total}
+
+.details.grid_12
+  #tabs
+    %ul
+      %li=link_to "Stream", '#stream'
+      %li=link_to "Me", '#about'
+      %li=link_to "Recipes(#{@recipes.total_entries})", '#recipes'
+      %li=link_to "Drafts(#{current_user.recipes.draft.count(1)})", '#drafts'
+      %li=link_to "Followers(#{current_user.following_me.count('1')})", '#followers'
+      %li=link_to "Following(#{current_user.i_am_following.count('1')})", '#following'
+      %li=link_to "Blogs(#{@blogs.total_entries})", '#blogs'
+      %li=link_to "Badges(#{@badges.length})", '#badges'
+      %li=link_to "Reputation", '#reputation'
+
+    #stream
+      %h5 My Activity Stream
+      =render :partial => '/activities/activities', :locals => {:stream => @stream, :user => current_user}
+      =javascript_tag('recipeImageFeedPopups();')
+    #about
+      -form_tag '/accounts/about' do
+        =text_area_tag :about_me, current_user.bio
+        =submit_tag 'Update About Me'
+      =javascript_tag "$j('#about_me').markItUp(mySettings);"
+    #recipes
+      =will_paginate @recipes, :params => {:anchor => 'recipes'}, :param_name => 'recipe_page'
+      -for recipe in @recipes
+        =render :partial => '/recipes/list_recipe', :locals => {:recipe => recipe}
+      =will_paginate @recipes, :params => {:anchor => 'recipes'}, :param_name => 'recipe_page'
+      =javascript_tag("recipeImagePopups();")
+    #drafts
+      -for recipe in @drafts
+        =render :partial => '/recipes/list_recipe', :locals => {:recipe => recipe}
+    #followers
+      -if current_user.following_me.blank?
+        %p Nobody is following me yet.
+      -else
+        =render :partial => '/users/mini_users', :locals => {:users => current_user.following_me}
+    #following
+      -if current_user.i_am_following.count('1') == 0
+        %p I am not following any members yet.
+        %p To follow a user, click on the #{strong('Follow Me')} button on their Profile page.
+      -else
+        =render :partial => '/users/mini_users', :locals => {:users => current_user.i_am_following}
+    #blogs
+      -for blog in @blogs
+        =render :partial => 'blogs/blog', :locals => {:blog => blog, :title_links => true}
+    #badges
+      -for badge in @badges
+        =render :partial => '/achievements/achievement', :locals => {:badge => badge}
+    #reputation
+      =@graph
+
+
+
+-content_for :page_end do
+  =javascript_tag "$j('#tabs').tabs();"

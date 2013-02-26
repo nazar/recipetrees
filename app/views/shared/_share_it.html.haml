@@ -1,0 +1,9 @@
+%span.fb_share
+  <script src="http://widgets.fbshare.me/files/fbshare.js"></script>
+%span.buzz
+  <g:plusone size="tall"></g:plusone>
+%span.tweet
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="#{url}" data-count="vertical">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+
+-content_for :page_end do
+  =javascript_include_tag('http://apis.google.com/js/plusone.js')

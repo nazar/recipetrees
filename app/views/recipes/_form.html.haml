@@ -1,0 +1,92 @@
+-content_for :jstmaplates do
+  -javascript_tag do
+    var recipe_ingredient='#{generate_template(f, :recipe_ingredients, {:partial => '/recipe_ingredients/form_row'})}'
+    var recipe_step='#{generate_template(f, :steps, {:partial => '/steps/form_row'})}'
+
+.grid_16
+  = error_messages_for 'recipe'
+  %h2 Tips
+  %ul
+    %li Hover your mouse over the #{image_tag 'question.png'} graphic for tips on each field
+    %li Ensure you have a recipe image (350 by 250 pixels is ideal) unless this is a draft recipe
+.grid_8
+  .div
+    =f.label :name, 'Recipe Name'
+    =f.text_field :name
+  .div
+    =f.label :cuisine_id, 'Cuisine'
+    =f.select :cuisine_id, options_from_collection_for_select(Cuisine.by_name, 'id', 'name', @recipe.cuisine_id)
+  .div
+    =f.label :categories, 'Select Recipe Categories', :class => 'question', :data_page => 'recipe_categories'
+    =f.select :categories, categories_full_hierarchical_hash_to_grouped_options(@recipe.categories), {}, {:multiple => true, :id => 'categories_select'}
+  .feeds
+    =f.label :serves_from, 'Feeds From'
+    =f.text_field :serves_from
+    =f.label :serves_to, 'To'
+    =f.text_field :serves_to
+
+
+  #images
+    =f.label :image, 'Recipe Image', :class => 'question', :data_page => 'recipe_image'
+    =f.file_field :image
+
+
+.grid_8
+  =f.label :description, 'Short Description', :class => 'question', :data_page => 'recipe_description'
+  =f.text_area :description
+  =f.label :tag_list, 'Tags (comma separated and single words)', :class => 'question', :data_page => 'recipe_tags'
+  =f.text_field :tag_list
+
+
+%h2{:class => 'title grid_3 question clear', :data_page => 'recipes_ingredients'} Ingredients
+.action.add.grid_13 #{link_to('Add', '#', :class => 'add_ingredient')} Another Ingredient
+#ingredients.grid_16
+  %table#ingredients_table
+    %tr
+      %th{:class => 'question', :data_page => 'recipe_ingredient_type'} Ingredient Type
+      %th{:class => 'question', :data_page => 'recipe_ingredient'} Ingredient
+      %th{:class => 'question', :data_page => 'recipe_ingredient_quantity'} Quantity
+      %th{:class => 'question', :data_page => 'recipe_measure'} Measure
+      %th{:class => 'question', :data_page => 'recipe_ingredient_action'} &nbsp;
+    -f.fields_for :recipe_ingredients do |ingredients_form|
+      =render :partial => '/recipe_ingredients/form_row', :locals => {:f => ingredients_form,                                                 |
+                                                                      :index => @recipe.recipe_ingredients.index(ingredients_form.object) }   |
+    %tr#last_ingredient
+      %td{:colspan => 5}
+.action.add.bottom.grid_16 #{link_to('Add', '#', :class => 'add_ingredient')} Another Ingredient
+
+
+%h2{:class => 'title grid_3 question', :data_page => 'recipe_steps'} Recipe Steps
+.action.add.grid_13 #{link_to('Add', '#', :class => 'add_method')} Another Step
+#steps.grid_16
+  %table#steps_table
+    %tr
+      %th Step
+      %th{:class => 'question', :data_page => 'recipe_step_time'} Step Time
+      %th Step Details
+      %th{:class => 'question', :data_page => 'recipe_step_stage', :width => "50"} Step Stage &amp; Image
+      %th{:class => 'question', :data_page => 'recipe_step_action'} &nbsp;
+    -f.fields_for :steps, @recipe.steps do |steps_form|
+      =render :partial => '/steps/form_row', :locals => {:f => steps_form, :index => @recipe.steps.index(steps_form.object)}
+    %tr#last_step
+      %td{:colspan => 5}
+
+.action.add.bottom.grid_16 #{link_to('Add', '#', :class => 'add_method')} Another Step
+.draft.grid_16
+  -if @recipe.facebook_published_at.blank?
+    %p #{check_box_tag :facebook_publish, 1, true } Publish this Recipe to your Facebook Profile page for your friends to see?
+  -if @recipe.facebook_app_published_at.blank?
+    %p #{check_box_tag :facebook_app_publish, 1, false } Publish this Recipe to RecipeTrees Facebook App page for all to see?
+  #{f.check_box :is_draft } Save as Draft (#{em("Draft recipes are not listed but can be accessed from your Account page under the Drafts tab")})
+
+
+:javascript
+  Event.addBehavior({ 'select.ingredient_type_select' : IngredientTypeCombo });
+  Event.addBehavior({ 'a.add_ingredient' : AddIngredientRow });
+  Event.addBehavior({ 'a.add_method' : AddRecipeMethod });
+  Event.addBehavior({ 'a.delete_ingredient' : DeleteIngredientRow });
+  Event.addBehavior({ 'a.delete_step' : DeleteStepRow });
+  Event.addBehavior({ 'a.step_up' : MoveStepRowUp });
+  Event.addBehavior({ 'a.step_down' : MoveStepRowDown });
+  $j('#categories_select').multiselect({ head: 'Uncheck all', noneSelectedText: 'Select Recipe Categories', selectedList: 4, height: '350px' });
+  hookFormTip();

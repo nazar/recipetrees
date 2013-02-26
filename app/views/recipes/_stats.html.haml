@@ -1,0 +1,37 @@
+-links ||= false
+%span.time
+  =image_tag 'time.png', :title => 'Time to Cook'
+  =span(recipe.total_time.seconds_to_stopwatch, :property => 'v:totalTime', :content => 'PT' + recipe.total_time.time_to_iso8601_duration)
+%span.feeds
+  =image_tag 'people.png', :title => 'Serves'
+  -if recipe.serves_from != recipe.serves_to
+    =span("#{recipe.serves_from} to #{recipe.serves_to}", :property => 'v:yield')
+  -else
+    #{span(recipe.serves_from, :property => 'v:yield')}
+%span.steps
+  -if links
+    =link_to image_tag('steps.png', :title => 'Number of steps'), '#tabs'
+  - else
+    =image_tag('steps.png', :title => 'Number of steps')
+  =recipe.steps_count
+%span.views
+  =image_tag 'views.png', :title => 'Number of times viewed'
+  =recipe.views_count
+-#%span.comments
+-#  - if links
+-#    =link_to image_tag('comments.png', :title => 'Recipe Comments'), '#tabs'
+-#  - else
+-#    =image_tag('comments.png', :title => 'Recipe Comments')
+-#  =recipe.posts_count
+%span.watchers
+  - if links
+    =link_to image_tag('watchers.png', :title => 'Members watching this recipe'), '#tabs'
+  - else
+    =image_tag('watchers.png', :title => 'Members watching this recipe')
+  =recipe.watchers_count
+%span.forks
+  -if links
+    =link_to image_tag('forks.png', :title => 'Number of recipe Forks'), '#tabs'
+  -else
+    =image_tag('forks.png', :title => 'Number of recipe Forks')
+  =recipe.forks_count

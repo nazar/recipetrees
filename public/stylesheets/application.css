@@ -1,0 +1,97 @@
+/*
+Syntax error: Alpha channel 3.0 must be between 0 and 1 inclusive for `rgba'
+        on line 315 of /home/nazar/rails/recipes.git/app/public/stylesheets/sass/application.scss
+
+310:   .title {
+311:     position: absolute;
+312:     top: 0;
+313:     left: 0;
+314:     width: 350px;
+315:     background: none repeat scroll 0 0 rgba(0, 0, 0, 0.30);
+316:    /* For ghey IE 5.5 - 7*/
+317:     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+318:     /* For ghey IE 8*/
+319:     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+320:     a {
+
+Backtrace:
+/home/nazar/rails/recipes.git/app/public/stylesheets/sass/application.scss:315
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/script/funcall.rb:74:in `_perform'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/script/node.rb:61:in `perform'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/script/operation.rb:67:in `_perform'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/script/node.rb:61:in `perform'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/prop_node.rb:132:in `perform!'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/node.rb:305:in `_perform'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/node.rb:213:in `perform'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/node.rb:326:in `perform_children'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/node.rb:326:in `map'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/node.rb:326:in `perform_children'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/node.rb:317:in `perform!'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/rule_node.rb:191:in `perform!'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/node.rb:305:in `_perform'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/node.rb:213:in `perform'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/node.rb:326:in `perform_children'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/node.rb:326:in `map'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/node.rb:326:in `perform_children'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/node.rb:317:in `perform!'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/rule_node.rb:191:in `perform!'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/node.rb:305:in `_perform'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/node.rb:213:in `perform'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/node.rb:326:in `perform_children'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/node.rb:326:in `map'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/node.rb:326:in `perform_children'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/node.rb:317:in `perform!'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/root_node.rb:59:in `perform!'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/node.rb:305:in `_perform'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/node.rb:213:in `perform'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/root_node.rb:37:in `perform'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/tree/root_node.rb:29:in `render'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/plugin.rb:220:in `update_stylesheet'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/plugin.rb:85:in `update_stylesheets'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/plugin.rb:78:in `each'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/plugin.rb:78:in `update_stylesheets'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/plugin.rb:76:in `each'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/plugin.rb:76:in `update_stylesheets'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/plugin.rb:50:in `check_for_updates'
+/home/nazar/rails/recipes.git/app/vendor/plugins/haml/rails/../lib/sass/plugin/rack.rb:40:in `call'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/actionpack-2.3.5/lib/action_controller/string_coercion.rb:25:in `call'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/rack-1.0.1/lib/rack/head.rb:9:in `call'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/rack-1.0.1/lib/rack/methodoverride.rb:24:in `call'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/actionpack-2.3.5/lib/action_controller/params_parser.rb:15:in `call'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/actionpack-2.3.5/lib/action_controller/session/cookie_store.rb:93:in `call'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/actionpack-2.3.5/lib/action_controller/failsafe.rb:26:in `call'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/rack-1.0.1/lib/rack/lock.rb:11:in `call'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/rack-1.0.1/lib/rack/lock.rb:11:in `synchronize'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/rack-1.0.1/lib/rack/lock.rb:11:in `call'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/actionpack-2.3.5/lib/action_controller/dispatcher.rb:114:in `call'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/actionpack-2.3.5/lib/action_controller/reloader.rb:34:in `run'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/actionpack-2.3.5/lib/action_controller/dispatcher.rb:108:in `call'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/rails-2.3.5/lib/rails/rack/static.rb:31:in `call'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/rack-1.0.1/lib/rack/urlmap.rb:46:in `call'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/rack-1.0.1/lib/rack/urlmap.rb:40:in `each'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/rack-1.0.1/lib/rack/urlmap.rb:40:in `call'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/rails-2.3.5/lib/rails/rack/log_tailer.rb:17:in `call'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/rack-1.0.1/lib/rack/content_length.rb:13:in `call'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/rack-1.0.1/lib/rack/chunked.rb:15:in `call'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/rack-1.0.1/lib/rack/handler/mongrel.rb:64:in `process'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `orig_process_client'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `orig_process_client'
+/home/nazar/rails/recipes.git/app/vendor/plugins/spawn/lib/patches.rb:63:in `process_client'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/rack-1.0.1/lib/rack/handler/mongrel.rb:34:in `run'
+/usr/local/rvm/gems/ree-1.8.6-20090610/gems/rails-2.3.5/lib/commands/server.rb:111
+/usr/local/rvm/rubies/ree-1.8.6-20090610/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+/usr/local/rvm/rubies/ree-1.8.6-20090610/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+script/server:3
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Syntax error: Alpha channel 3.0 must be between 0 and 1 inclusive for `rgba'\A         on line 315 of /home/nazar/rails/recipes.git/app/public/stylesheets/sass/application.scss\A \A 310:   .title {\A 311:     position: absolute;\A 312:     top: 0;\A 313:     left: 0;\A 314:     width: 350px;\A 315:     background: none repeat scroll 0 0 rgba(0, 0, 0, 0.30);\A 316:    /* For ghey IE 5.5 - 7*/\A 317:     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);\A 318:     /* For ghey IE 8*/\A 319:     -ms-filter: \"progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)\";\A 320:     a {"; }

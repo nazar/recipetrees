@@ -1,0 +1,15 @@
+<div id="fb-root"></div>
+<script type="text/javascript">
+//<![CDATA[
+  window.fbAsyncInit = function() {
+    FB.init({appId: '<%= Facebook::APP_ID %>', status: true, cookie: true, xfbml: true});
+    <%= yield :fb_code %>
+  };
+  (function() {
+    var e = document.createElement('script');
+    e.async = true;
+    e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+    document.getElementById('fb-root').appendChild(e);
+  }());
+//]]>
+</script>

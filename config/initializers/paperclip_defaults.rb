@@ -1,0 +1,2 @@
+Paperclip::Attachment.default_options[:path] = ":rails_root/public/assets/:class/:attachment/:id/:style_:basename.:extension"
+Paperclip::Attachment.default_options[:url]  = "/assets/:class/:attachment/:id/:style_:basename.:extension"

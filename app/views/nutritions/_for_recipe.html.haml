@@ -1,0 +1,6 @@
+#nutrition_container.clearfix
+  -if recipes.last.serves_to.to_i > 1
+    =render :partial => '/nutritions/nutrition_table', :locals => {:recipes => recipes, :ratio => recipes.last.serves_to.to_i, :title => 'per portion', :rdfa => true }
+    =render :partial => '/nutritions/nutrition_table', :locals => {:recipes => recipes, :ratio => 1, :title => 'all portions' }
+  -else
+    =render :partial => '/nutritions/nutrition_table', :locals => {:recipes => recipes, :ratio => 1, :title => 'per portion', :rdfa => true }

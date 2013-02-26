@@ -1,0 +1,7 @@
+%h1 Editing #{h @ingredient.name}
+
+- form_for @ingredient, :html => {:multipart => true, :class => 'styled'} do |f|
+  =render :partial => 'form', :locals => {:f => f}
+  .action_panel.grid_16
+    =f.submit 'Update Ingredient'
+    =link_to 'Cancel', ingredient_path(@ingredient), :class => 'button'

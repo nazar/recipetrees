@@ -1,0 +1,5 @@
+- form_for setup_recipe(@recipe), :html => {:multipart => true, :class => 'styled'} do |f|
+  =render :partial => 'form', :locals => {:f => f}
+  .action_panel.grid_16
+    =f.submit 'Update Recipe', :disable_with => "Please wait... might take a while.."
+    =link_to 'Cancel', recipe_path(@recipe), :class => 'button'

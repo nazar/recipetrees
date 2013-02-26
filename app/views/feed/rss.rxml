@@ -1,0 +1,25 @@
+xml.instruct!
+
+xml.rss "version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/", "xmlns:media" => "http://search.yahoo.com/mrss/" do
+ xml.channel do
+
+   xml.title       "RecipeTrees.com Feed"
+   xml.link        url_for :only_path => false, :controller => 'recipes'
+   xml.description "Latest recipe, blog and ingredient updates from RecipeTrees members."
+
+   @actions.each do |action|
+     xml.item do
+       xml.title       "#{action.user.name} #{action.action} #{action.item_type.downcase} #{action.item.name}"
+       xml.link        polymorphic_url(action.item)
+       xml.pubDate     CGI.rfc1123_date(action.created_at)
+       xml.description truncate(textile_to_text(action.item.description), :length => 200)
+       xml.guid        polymorphic_url(action.item)
+       xml.author      action.user.name
+       if action.item.is_a?(Recipe)
+         xml.media       :thumbnail , :url => path_to_url(action.item.image.url), :type => "image/jpeg"
+       end
+     end
+   end
+
+ end
+end

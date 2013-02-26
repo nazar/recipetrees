@@ -1,0 +1,16 @@
+!!!
+%html{:xmlns => "http://www.w3.org/1999/xhtml", "xmlns:og" => "http://ogp.me/ns#", "xmlns:fb" => "http://www.facebook.com/2008/fbml"}
+  %head
+    =stylesheet_link_tag '960', 'reset', 'text', 'application', 'print', :media => 'screen'
+    =stylesheet_link_tag '960', 'reset', 'text', 'application', 'print', :media => 'print'
+
+
+  %title= get_page_title || 'RecipeTrees.com'
+
+  %body
+
+    #contents.body
+      =yield
+
+    =render :partial => '/shared/clicky'
+    =render :partial => '/shared/ga'

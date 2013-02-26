@@ -1,0 +1,7 @@
+%ul
+  -for ingredient in relations.sort{|a,b| a.name <=> b.name}
+    -unless ingredient.id == current_ingredient.id
+      %li.ingredient= ingredient_line_with_relation(ingredient, current_ingredient)
+
+-if admin? && (relations.length > 1)
+  =generate_relations_image(relations, current_ingredient)

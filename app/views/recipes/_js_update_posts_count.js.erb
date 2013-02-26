@@ -1,0 +1,29 @@
+FB.Event.subscribe('comment.create', function (response) {
+//  console.log('create', response);
+//  alert('comment.create');
+  //got response.... now query FQL to return total number of post counts
+  FB.api(
+    {
+      method: "fql.query",
+      query: "SELECT count FROM comments_info WHERE xid='<%= @recipe.to_param %>' and app_id='<%= Facebook::APP_ID %>'"
+    },
+    function(fql_response) {
+      $j.post('<%= commented_recipe_path(@recipe) %>', {count: fql_response[0].count});
+    }
+  );
+});
+
+FB.Event.subscribe('comment.remove', function (response) {
+  //got response.... now query FQL to return total number of post counts
+//  alert('comment.remove');
+//  console.log('remove', response);
+  FB.api(
+    {
+      method: "fql.query",
+      query: "SELECT count FROM comments_info WHERE xid='<%= @recipe.to_param %>' and app_id='<%= Facebook::APP_ID %>'"
+    },
+    function(fql_response) {
+      $j.post('<%= commented_recipe_path(@recipe) %>', {count: fql_response[0].count});
+    }
+  );
+});

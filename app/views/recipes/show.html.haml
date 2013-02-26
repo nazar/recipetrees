@@ -1,0 +1,162 @@
+-content_for :extra_header do
+  !="<meta content='#{CGI.unescapeHTML(h(@recipe.name))}' property='og:title'></meta>"
+  !="<meta content='#{textile_to_text(@recipe.description)}' property='og:description'></meta>"
+  %meta{:property => 'og:type', :content => "food"}
+  %meta{:property => 'og:site_name', :content => "RecipeTrees.com"}
+  %meta{:property => 'og:image', :content => path_to_url(@recipe.image.url(:thumbnail))}
+  %meta{:property => 'og:url', :content => recipe_url(@recipe)}
+
+
+#recipe
+  -recipes = @recipe.recipes_used_in_this || []
+  -recipes_plus_this = recipes.dup << @recipe
+
+  .grid_12
+    %div{'xmlns:v' => 'http://rdf.data-vocabulary.org/#', :typeof => 'v:Recipe'}
+      %h1{:property => 'v:name'}=h @recipe.name
+      .recipe_image_block
+        .image= image_tag(@recipe.image(:original), :alt => h(@recipe.name), :rel => 'v:photo')
+        #fb_like <fb:like href="#{recipe_url(@recipe)}" show_faces="true" send="true" width="380"></fb:like>
+      .created_by
+        by #{link_to(span(@recipe.user.name, :property => 'v:author'), profile_path(@recipe.user))} submitted #{span(time_ago_in_words @recipe.created_at, :property => 'v:published', :content => @recipe.created_at.iso8601 )} ago
+        -unless @recipe.forked_from.blank?
+          .forked_from Forked from #{link_to h(@recipe.forked_from.origin.name), recipe_path(@recipe.forked_from.origin)}
+      .stats
+        -if @recipe.serves_to.to_i > 1
+          %span
+            =image_tag('portion_meal.png', :title => 'Calories per Portion')
+            =recipe_totals(recipes_plus_this, :total_calories, @recipe.serves_to.to_f).pretty_roundify
+        %span
+          =image_tag('full_meal.png', :title => 'Calories for meal')
+          =recipe_totals(recipes_plus_this, :total_calories, 1).pretty_roundify
+        = render :partial => 'stats', :locals => {:recipe => @recipe, :links => true}
+      -if @recipe.is_draft
+        .draft Draft Recipe. Not listed until complete.
+      .description
+        =span(from_textile(@recipe.description), :property => 'v:summary')
+      %span.categories
+        = image_tag('category.png', :title => 'categories')
+        = render_recipe_categories_as_filters(@recipe)
+      %span.tags
+        = image_tag('tag.png', :title => 'tags')
+        = render_recipe_tags_as_filters(@recipe.tags)
+      .clear
+      -if show_adds(current_user)
+        .leader_advert advertising
+      #tabs
+        -sub_count   = @recipe.sub_recipes.count(1)
+        -sub_recipes = sub_count > 0
+        %ul
+          %li=link_to 'Ingredients', '#ingredients'
+          %li=link_to 'How to Cook', '#cook'
+          -if sub_recipes
+            %li=link_to "Eaten With(#{sub_count})", '#eaten_with'
+          %li=link_to "Comments(<fb:comments-count href=#{recipe_url(@recipe)}></fb:comments-count>)", '#comments'
+          -unless @recipe.total_calories.blank?
+            %li=link_to 'Nutrition', '#nutrition'
+          %li=link_to "Forks(#{@forks.length - 1})", '#forks'
+          %li=link_to "Watchers(#{@recipe.watchers.count(1)})", '#watchers'
+          %li=link_to "By others(#{@by_others.total_entries})", '#by_others'
+
+        #ingredients
+          =render :partial => '/ingredients/ingredients_for_recipe', :locals => {:recipe => @recipe, :recipes => recipes}
+        #cook
+          =render :partial => '/steps/steps_for_recipe', :locals => {:recipe => @recipe, :recipes => recipes}
+        -if sub_recipes
+          #eaten_with
+            -for recipe in @recipe.sub_recipes
+              =render :partial => '/recipes/list_recipe', :locals => {:recipe => recipe}
+            =javascript_tag("recipeImagePopups();")
+        #comments
+          <fb:comments href="#{recipe_url(@recipe)}" num_posts="10" width="750"></fb:comments>
+        -unless @recipe.total_calories.blank?
+          #nutrition
+            =render :partial => '/nutritions/for_recipe', :locals => {:recipes => recipes_plus_this}
+            .fatsecret_footer
+              =link_to image_tag('http://platform.fatsecret.com/js/static/images/powered_fs.gif'), 'http://fatsecret.com', :title => 'Powered by FatSecret', :target => '_blank'
+        #forks
+          -if @forks.length > 1
+            =render :partial => '/recipe_forks/recipe_forks', :locals => {:current_recipe => @recipe, :recipe_forks => @forks}
+          -else
+            %p No one has #{span('forked', :class => 'info', :data_page => 'recipe_forks')} this recipe. Be the the first to #{link_to 'Fork it', new_branch_path(@recipe)}.
+        #watchers
+          -if @recipe.watchers.count(1) > 0
+            =render :partial => '/users/mini_users', :locals => {:users => @recipe.watchers}
+          -else
+            %p No one is #{span('watching', :class => 'info', :data_page => 'recipe_watch')} this recipe. Be the first to #{link_to 'watch', watch_recipe_path(@recipe), :method => :post} it.
+        #by_others
+          %p Have you cooked this recipe? #{link_to 'Add', new_recipe_by_other_path(@recipe), :class => 'add_by_other', :title => 'Add your image of this recipe'} your comments and image here.
+          =render :partial => '/recipes_by_others/list', :locals => {:by_others => @by_others}
+
+
+      #my_ratings
+        %span{:rel => "v:Review"}
+          %span{:typeof => "v:Review-aggregate"}
+            %span{:rel => "v:rating"}
+              %span{:typeof => "v:Rating"}
+                Voted #{span(@recipe.average_rating, :id => 'avg', :property => 'v:average')}/#{strong('5')} (#{span(@recipe.ratings_count, :id => 'votes', :property => 'v:count')} votes)
+
+  #profile.grid_4
+    -panel(4) do
+      %ul.actions.clearfix
+        -if @recipe.can_edit(current_user)
+          %li
+            =link_to image_tag('edit_32.png'), edit_recipe_path(@recipe)
+            %br
+            =link_to 'Edit', edit_recipe_path(@recipe)
+        -if logged_in?
+          %li
+            =link_to image_tag('add_32.png'), new_recipe_path
+            %br
+            =link_to 'Add', new_recipe_path
+        %li
+          =link_to image_tag('print_32.png'), print_recipe_path(@recipe)
+          %br
+          =link_to 'Print', print_recipe_path(@recipe)
+        -unless @recipe.my_recipe(current_user)
+          %li
+            =link_to image_tag('eye_32.png'), watch_recipe_path(@recipe, :class => 'info', :data_page => 'recipe_watch')
+            %br
+            =link_to 'Watch', watch_recipe_path(@recipe), :method => :post, :class => 'info', :data_page => 'recipe_watch'
+        %li
+          =link_to image_tag('branch_32.png'), new_branch_path(@recipe), :class => 'info', :data_page => 'recipe_forks'
+          %br
+          =link_to 'Fork', new_branch_path(@recipe), :class => 'info', :data_page => 'recipe_forks'
+        -if admin?
+          %li
+            =link_to image_tag('remove_32.png'), delete_recipe_path(@recipe), :method => :delete
+            %br
+            =link_to 'Delete', delete_recipe_path(@recipe), :method => :delete
+          -if @recipe.facebook_app_published_at.blank?
+            %li
+              =link_to image_tag('facebook_32.png'), post_to_app_wall_recipe_path(@recipe)
+              %br
+              =link_to 'App Wall', post_to_app_wall_recipe_path(@recipe)
+
+    -panel(4) do
+      =render :partial => '/users/panel_profile', :locals => {:user => @recipe.user}
+
+    -panel(4) do
+      .share_it.clearfix
+        =render :partial => '/shared/share_it', :locals => {:url => recipe_url(@recipe)}
+
+    -if not @recipe.is_draft
+      -panel(4) do
+        =render :partial => '/ratings/ratings', :locals => {:rateable => @recipe}
+
+    -if show_adds(current_user)
+      .half_banner_advert advertising
+      .half_banner_advert advertising
+      .half_banner_advert advertising
+
+
+-content_for :fb_code do
+  =render :partial => 'js_update_posts_count.js'
+
+-content_for :page_end do
+  :javascript
+    $j('#tabs').tabs();
+    hookInfoSpans();
+    hookRecipeIngredientsPopup();
+    hookAddByOthersDiag();
+    hookByOtherImages();

@@ -1,0 +1,21 @@
+-index ||= 'NEW_RECORD'
+%tr{:id => "step_#{index}", :class => 'step_row'}
+  %td
+    =f.text_field :step_no, :class => 'recipe_step', :disabled => true
+    =f.hidden_field :step_actual
+    =f.hidden_field :cloned_from_id
+  %td=f.text_field :time_required, :class => 'step_time'
+  %td=f.text_area :description, :class => 'step_description'
+  %td
+    =f.select :stage, options_for_select(Step.stages.collect{|s| [s.last, s.first]}.sort{|a,b| a.last<=>b.last}, f.object.stage),{}, {:class => 'step_stage'}
+    =f.file_field :image, :size => 7, :class => 'step_file'
+  %td
+    =link_to image_tag('arrow_up.gif', :title => 'Move Step Up'), '#', :id => "up_#{index}", :class => 'step_up'
+    %br
+    -if f.object.new_record?
+      =link_to image_tag('action_stop.gif', :title => 'Remove Step'), '#', :id => "delete_step_#{index}", :class => 'delete_step'
+    -else
+      =f.check_box '_destroy'
+      =image_tag('action_stop.gif', :title => 'Remove Step')
+    %br
+    =link_to image_tag('arrow_down.gif', :title => 'Move Step Down'), '#', :id => "down_#{index}", :class => 'step_down'

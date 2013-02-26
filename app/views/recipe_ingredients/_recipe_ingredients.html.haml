@@ -1,0 +1,4 @@
+%ul
+  -for recipe_ingredient in recipe_ingredients.sort{|a,b| a.ingredient_group <=> b.ingredient_group}
+    -unless recipe_ingredient.recipe_item_type == 'Recipe'
+      %li= recipe_ingredient_line(recipe_ingredient)

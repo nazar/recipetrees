@@ -1,0 +1,18 @@
+.grid_11.suffix_1
+  =render :partial => '/blogs/blog', :locals => {:blog => @blog}
+  .blog_comments
+    %h5 Comments
+    <fb:comments href="#{blog_url(@blog)}" num_posts="10" width="740px"></fb:comments>
+.grid_4
+  -panel('4') do
+    .action_button #{link_to 'New Blog Entry', new_blog_path, :class => 'button'}
+    -if @blog.my_blog(current_user)
+      .action_button #{link_to 'Edit Blog', edit_blog_path(@blog), :class => 'button'}
+    .action_button #{link_to 'Blogs Index', blogs_path, :class => 'button'}
+    -unless logged_in?
+      =render :partial => '/shared/fb_login'
+
+  -if show_adds(current_user)
+    .half_banner_advert advertising
+    .half_banner_advert advertising
+    .half_banner_advert advertising

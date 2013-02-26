@@ -1,0 +1,10 @@
+-image_type ||= :thumbnail
+%h5 Main Steps
+=render :partial => '/steps/steps_list', :locals => {:steps => recipe.steps, :image_type => image_type}
+
+- unless recipes.blank?
+  - recipes.sort{|a,b| a.name <=> b.name}.each do |sub_recipe|
+    %h5 Sub Steps for #{link_to h(sub_recipe.name), recipe_path(sub_recipe)}
+    =render :partial => '/steps/steps_list', :locals => {:steps => sub_recipe.steps, :image_type => image_type}
+
+=javascript_tag("stepImagePopups();")

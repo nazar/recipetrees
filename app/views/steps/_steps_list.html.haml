@@ -1,0 +1,11 @@
+- image_type ||= :thumbnail
+%ul{:property => 'v:instructions', :class => 'steps'}
+  -for step in steps
+    %li
+      =span('Step' + step.step_no.to_s + '.&nbsp;&nbsp;', :class => 'step') << span(step.time_required_seconds.to_i.seconds_to_stopwatch, :class => 'time')
+      -unless step.image_file_name.blank?
+        .step_image= link_to image_tag(step.image.url(image_type)), step_image_path(step), :class => 'step_image_thumb'
+      .step_method
+        :textile
+          #{h(step.description)}
+      .clear

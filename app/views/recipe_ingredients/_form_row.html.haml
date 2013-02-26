@@ -1,0 +1,17 @@
+-index ||= 'NEW_RECORD'
+%tr{:id => "recipe_#{index}", :class => 'recipe_row'}
+  %td= f.select :recipe_item_type, ['Ingredient', 'Recipe'], {}, {:class => 'ingredient_type_select'}
+  %td
+    =f.text_field :name
+    =f.hidden_field :recipe_item_id
+    -javascript_tag do
+      $j("#recipe_recipe_ingredients_attributes_#{index}_name").autocomplete({ source: "/ingredients/get/ajax/", minLength: 2, select: assignIngredientID  });
+  %td= f.text_field :unit,  {:class => 'unit_field'}
+  %td= f.select :measure_id, options_from_collection_for_select(Measure.by_name_cache, 'id', 'name', f.object.measure_id), {}, {:class => 'measure_select'}
+  %td
+    -if f.object.new_record?
+      =link_to image_tag('action_stop.gif', :title => 'Remove Ingredient'), '#', :id => "delete_ingredient_#{index}", :class => 'delete_ingredient'
+    -else
+      =f.check_box '_destroy'
+      =image_tag('action_stop.gif', :title => 'Delete Ingredient')
+

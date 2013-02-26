@@ -1,0 +1,73 @@
+.grid_16
+  .grid_12.alpha
+    .grid_11
+      #filter
+        %h2 Filter Recipes by Ingredients
+        .note Type ingredients to filter recipes by or click on Cuisine, Category or tag boxes on the right
+        -form_tag '/recipes/filter', :id => 'filter' do
+          %ul{:id => 'ingredient_filter', :name => 'filter[]'}
+            -unless (ings = filter_session_to_string).blank?
+              -for ing in ings
+                %li= ing
+          .note and or type a phrase to filter recipes by Title
+          .keywords= text_field_tag :recipe_title, @recipe_title
+          %p=submit_tag 'Filter'
+
+      %h2 Recipes
+
+      -for recipe in @recipes
+        =render :partial => 'list_recipe', :locals => {:recipe => recipe, :tag_links => true, :category_link => true}
+
+      .paginate
+        =will_paginate @recipes
+
+  .grid_4.omega
+    -panel('4') do
+      %ul.actions.clearfix
+        %li
+          =link_to image_tag('search_32.png'), '', :class => 'search', :title => 'Search Recipes', :alt => 'Search Recipes'
+          %br
+          =link_to 'Search', '', :class => 'search'
+        %li
+          =link_to image_tag('add_32.png'), new_recipe_path
+          %br
+          =link_to 'Add Recipe', new_recipe_path
+        -unless logged_in?
+          %li
+            =link_to image_tag('register_32.png'), url_for_oauth
+            %br
+            =link_to 'Join Us', url_for_oauth
+
+    -panel('4') do
+      %h3 Cuisines
+      -cache_recipe_block('cuisines') do
+        =cuisines_check_boxes(@recipes_scope)
+
+    -panel('4') do
+      %h3 Categories
+      -cache_recipe_block('categories') do
+        =categories_check_boxes(@recipes_scope)
+
+    -panel('4') do
+      %h3 Tags
+      -cache_recipe_block('tags') do
+        =tag_check_boxes(@recipes_scope)
+
+    -if action_name == 'filter'
+      -panel('4') do
+        %h3 Ingredients
+        =ingredients_check_boxes(@recipes_scope)
+
+-content_for :page_end do
+  :javascript
+    recipeImagePopups();
+    hookTagLinkFilter();
+    hookCategoryLinkFilter();
+    hookCuisineFilters();
+    hookCategoryFilters();
+    hookTagFilters();
+    hookIngredientFilters();
+    $j('#ingredient_filter').tagit({tagSource: '/ingredients/get/ajax', minLength: 2, select: true});
+    hookSearchArea();
+
+

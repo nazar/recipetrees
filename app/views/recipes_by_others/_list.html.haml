@@ -1,0 +1,9 @@
+-for other in by_others
+  .by_other.clearfix
+    -unless other.images.blank?
+      .image= link_to image_tag(other.images.first.picture.url(:thumbnail)), recipe_by_other_image_path(other), :class => 'by_other_image'
+    .by
+      Cooked by #{link_to other.user.name, profile_path(other.user.id)} #{time_ago_in_words other.created_at} ago.
+    .avatar= link_to image_tag(other.user.facebook_thumbnail), profile_path(other.user)
+    .comments
+      =from_textile(other.comments)

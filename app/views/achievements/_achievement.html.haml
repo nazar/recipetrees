@@ -1,0 +1,5 @@
+.row.clearfix
+  .badge
+    = content_tag(:span, badge.level_name, :class => 'badge')
+    %span{:class => "pip level_#{badge.level.to_i.to_s}"}
+  .description for #{badge.description}

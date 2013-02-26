@@ -1,0 +1,6 @@
+-user ||= []
+#stream
+  -for activity in stream
+    .activity
+      %span.date=activity.created_at.strftime('%Y %b %e -')
+      =render_activity_description(activity)

@@ -1,0 +1,41 @@
+#recipe
+  -recipes = @recipe.recipes_used_in_this || []
+  -recipes_plus_this = recipes.dup << @recipe
+  .container_16
+    .grid_16
+
+      %h1=h @recipe.name
+      .recipe_image_block
+        .image= image_tag(@recipe.image(:original), :alt => h(@recipe.name), :rel => 'v:photo')
+      .created_by
+        by #{link_to(span(@recipe.user.name, :property => 'v:author'), profile_path(@recipe.user))} submitted #{span(time_ago_in_words @recipe.created_at, :property => 'v:published', :content => @recipe.created_at.iso8601 )} ago
+        -unless @recipe.forked_from.blank?
+          .forked_from Forked from #{link_to h(@recipe.forked_from.origin.name), recipe_path(@recipe.forked_from.origin)}
+      .stats
+        -if @recipe.serves_to > 1
+          %span
+            =image_tag('portion_meal.png', :title => 'Calories per Portion')
+            =recipe_totals(recipes_plus_this, :total_calories, @recipe.serves_to.to_f).pretty_roundify
+        %span
+          =image_tag('full_meal.png', :title => 'Calories for meal')
+          =recipe_totals(recipes_plus_this, :total_calories, 1).pretty_roundify
+        = render :partial => 'stats', :locals => {:recipe => @recipe, :links => true}
+      .description
+        =from_textile(@recipe.description)
+      %span.categories
+        = image_tag('category.png', :title => 'categories')
+        = render_recipe_categories_as_filters(@recipe)
+      %span.tags
+        = image_tag('tag.png', :title => 'tags')
+        = render_recipe_tags_as_filters(@recipe.tags)
+      .clear
+
+      #ingredients
+        %h2 List of Ingredients
+        =render :partial => '/ingredients/ingredients_for_recipe', :locals => {:recipe => @recipe, :recipes => recipes}
+      #cook
+        %h2 Cooking Method
+        =render :partial => '/steps/steps_for_recipe', :locals => {:recipe => @recipe, :recipes => recipes, :image_type => :original}
+      #nutrition
+        %h2 Nutritional Information
+        =render :partial => '/nutritions/for_recipe', :locals => {:recipes => recipes_plus_this}

@@ -1,0 +1,10 @@
+.idea
+log
+tmp
+
+public/assets/images/pictures/*/*
+public/assets/ingredients/*/*
+public/assets/recipes/*/*
+public/assets/steps/*/*
+
+public/images/graphs

@@ -1,0 +1,10 @@
+-title_links ||= false
+.title_block
+  %span.by by #{link_to blog.user.name, profile_path(blog.user)}
+  -if title_links
+    %h1= link_to blog.title, blog_path(blog)
+  -else
+    %h1= blog.title
+  %span.submitted{:title => blog.created_at.strftime('%B %d, %Y %I:%M %P')} submitted #{time_ago_in_words(blog.created_at)} ago
+.body_block
+  =from_textile(blog.body)

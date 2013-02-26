@@ -1,0 +1,3 @@
+#user_profile
+  .avatar= image_tag user.facebook_profile unless user.facebook_profile.blank?
+  .name= link_to h(user.name), profile_path(user)

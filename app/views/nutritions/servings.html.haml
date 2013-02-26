@@ -1,0 +1,58 @@
+-unless @servings.blank?
+  -form_for [@ingredient, @ingredient.build_nutrition], :url => ingredient_nutrition_path(@ingredient) do |f|
+    %table
+      %tr
+        %th
+        %th Desc
+        %th Serving Amt
+        %th Unit
+        %th Fiber
+        %th Protein
+        %th Sugar
+        %th Sodium
+        %th Potas
+        %th Cals
+        %th Carbs
+        %th Fat
+        %th Sat Fat
+        %th Chol
+      -for serving in @servings['serving']
+        %tr{:class => cycle('even','')}
+          %td
+            =f.radio_button :serving_id, serving['serving_id'], :class => 'serving'
+            %span.hidden.serving_url= serving['serving_url']
+          %td=serving['serving_description']
+          %td.serving_amount=serving['metric_serving_amount']
+          %td=serving['metric_serving_unit']
+          %td.fiber=serving['fiber']
+          %td.protein=serving['protein']
+          %td.sugar=serving['sugar']
+          %td.sodium=serving['sodium']
+          %td.potassium=serving['potassium']
+          %td.calories=serving['calories']
+          %td.carbohydrate=serving['carbohydrate']
+          %td.fat=serving['fat']
+          %td.saturated_fat=serving['saturated_fat']
+          %td.cholesterol=serving['cholesterol']
+
+    =hidden_field_tag "nutrition[serving_amount]" , {}, :class => 'serving_amount',:id => "serving_amount_#{@ingredient.id}"
+    =hidden_field_tag "nutrition[fiber]"          , {}, :class => 'fiber',         :id => "fiber_#{@ingredient.id}"
+    =hidden_field_tag "nutrition[protein]"        , {}, :class => 'protein',       :id => "protein_#{@ingredient.id}"
+    =hidden_field_tag "nutrition[sugar]"          , {}, :class => 'sugar',         :id => "sugar_#{@ingredient.id}"
+    =hidden_field_tag "nutrition[sodium]"         , {}, :class => 'sodium',        :id => "sodium_#{@ingredient.id}"
+    =hidden_field_tag "nutrition[potassium]"      , {}, :class => 'potassium',     :id => "potassium_#{@ingredient.id}"
+    =hidden_field_tag "nutrition[calories]"       , {}, :class => 'calories',      :id => "calories_#{@ingredient.id}"
+    =hidden_field_tag "nutrition[carbohydrate]"   , {}, :class => 'carbohydrate',  :id => "carbohydrate_#{@ingredient.id}"
+    =hidden_field_tag "nutrition[fat]"            , {}, :class => 'fat',           :id => "fat_#{@ingredient.id}"
+    =hidden_field_tag "nutrition[saturated_fat]"  , {}, :class => 'saturated_fat', :id => "saturated_fat_#{@ingredient.id}"  
+    =hidden_field_tag "nutrition[cholesterol]"    , {}, :class => 'cholesterol',   :id => "cholesterol_#{@ingredient.id}"
+    =hidden_field_tag "nutrition[serving_url]"    , {}, :class => 'serving_url',   :id => "serving_url_#{@ingredient.id}"
+    =hidden_field_tag "food_id", params[:food_id]
+
+    =label_tag :nutrition_each_grams, 'Each Grams'
+    =text_field_tag 'nutrition[each_grams]'
+
+    =javascript_tag("hookServingRadio($j('#servings_'+#{@ingredient.id}));")
+
+-else
+  %p No servings found

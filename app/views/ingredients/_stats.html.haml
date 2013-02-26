@@ -1,0 +1,22 @@
+-links ||= false
+%span
+  -if links
+    =link_to image_tag('recipes.png', :title => "#{h ingredient.name} used in #{pluralize(ingredient.recipes_count, 'recipe')}"), '#tabs'
+  -else
+    =image_tag('recipes.png', :title => "#{h ingredient.name} used in #{pluralize(ingredient.recipes_count, 'recipe')}")
+  =ingredient.recipes_count
+%span
+  =image_tag 'views.png', :title => "#{h ingredient.name} viewed #{pluralize(ingredient.views_count, 'time')}"
+  =ingredient.views_count
+%span
+  =image_tag 'versions.png', :title =>  "#{h ingredient.name} edit #{pluralize(ingredient.revisable_number.to_i, 'time')}"
+  =ingredient.revisable_number
+%span
+  -if links
+    =link_to image_tag('comments.png', :title => 'Ingredient Comments'), '#tabs'
+  -else
+    =image_tag('comments.png', :title => 'Ingredient Comments')
+  =ingredient.posts_count
+-#%span
+  =image_tag 'images.png', :title => 'Ingredient Images'
+  =ingredient.images_count

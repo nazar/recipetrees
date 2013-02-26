@@ -1,0 +1,20 @@
+.ingredient.clearfix
+  -if ingredient.image_file_name.blank?
+    .image= image_tag ingredient.image.url(:thumbnail)
+  -else
+    .image= link_to image_tag(ingredient.image.url(:thumbnail)), ingredient_image_path(ingredient), :class => 'ingredient_image_thumb'
+  %h2.name= link_to h(ingredient.name), ingredient_path(ingredient)
+  .description
+    -if ingredient.description.blank?
+      =ingredient_description_or_blank(ingredient)
+    -else
+      = textile_to_text(ingredient.description, 100)
+  -if admin?
+    .group_set= select_tag "ingredient_#{ingredient.id}", options_for_select(ingredient_group_options, ingredient.ingredient_group.to_i), :class => 'group_select'
+    .nutrition
+      -if ingredient.nutrition.blank?
+        =link_to 'add nutrition', new_ingredient_nutrition_path(ingredient), :class => 'add_nutrition', :title => "Nutrition #{h(ingredient.name)}"
+      -else
+        =link_to strong('redo nutrition'), new_ingredient_nutrition_path(ingredient), :class => 'add_nutrition', :title => "Nutrition #{h(ingredient.name)}"
+
+  .stats= render :partial => '/ingredients/stats', :locals => {:ingredient => ingredient}

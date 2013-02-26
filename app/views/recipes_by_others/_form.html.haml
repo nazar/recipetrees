@@ -1,0 +1,6 @@
+=f.label :comments
+=f.text_area :comments
+-fields_for :images, @by_others.images do |image_form|
+  .row
+    =image_form.label :image, 'Picture of your version of the recipe'
+    =image_form.file_field :picture

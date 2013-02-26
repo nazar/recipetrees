@@ -1,0 +1,30 @@
+<% render_navigation :user, :generate_css => false do
+
+  add_item do |i|
+    i.named "Hi #{current_user.name}"
+    i.disable!
+  end if logged_in?
+
+  add_item do |i|
+    i.named 'my account'
+    i.links_to hash_for_account_path
+  end if logged_in?
+
+#  add_item do |i|
+#    i.named 'logout'
+#    i.links_to hash_for_logout_path
+#  end if logged_in?
+
+  add_item do |i|
+    i.named 'admin'
+    i.links_to hash_for_admin_path
+  end if admin?
+
+  add_item do |i|
+    i.named 'register'
+    i.classed 'login'
+    i.titled 'Connect with Facebook'
+    i.links_to hash_for_login_path
+  end unless logged_in?
+
+end %>

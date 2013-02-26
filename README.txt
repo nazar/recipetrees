@@ -1,0 +1,35 @@
+# About RecipeTrees
+
+Like GitHub for recipes minus the git.
+
+Recipe Trees is a recipe sharing website with an emphasis on the ability to categorise, search and describe recipes in easy to follow steps.
+
+## Social Recipes
+
+At its heart, Recipe Trees is closely tied with Facebook. This means that you will need a Facebook account to login and use Recipe Trees. This helps us eliminate spammers and trolls, who thrive on anonymity. This also means that you don't need to remember another username and password to login.
+
+We also use Facebook's sharing and commenting facilities, which makes it easier for you to share your comments and recipes with your Facebook friends.
+
+## Recipe Forks
+
+The word Fork is used in Software Development to describe the process of taking a product's code and copying it for the purpose of further customisation. Joomla, for example, was forked from Mambo.
+
+So how does this apply to recipes?
+
+Well, Recipe Trees allows you to Fork any recipe and make it your own. Your version of the recipe becomes the Fork. You are then able to change your recipe fork any which you want and independently of the original recipe.
+
+So if you Forked one of my recipes and then others forked your version and so on we end up with a tree which Recipe Trees is able to track and anyone would be able to navigate through to its origin.
+
+I think this is much more interesting than just adding a recipe to a favourites list.
+
+## Ingredients Database
+
+Another goal of this site is to build an ingredients database based on our recipes. Initially we are not going to have many ingredients but these will be automatically added as new recipes are added.
+
+In essence, an ingredient knows which recipes it is attached to. Once added, anyone can edit an ingredient's description and view which recipes a particular ingredient is used in.
+
+This also allows us to use advanced filters on our recipes based on any combination of ingredients. Want to cook something with peppers, eggs and bacon? Key in your ingredients in the recipes filter page and only recipes containing your specified ingredients will be returned.
+
+## Advanced Filtering
+
+We've talked about ingredient filtering. You are also able to further filter recipes by tags, categories (i.e BBQ recipes) and cuisines.

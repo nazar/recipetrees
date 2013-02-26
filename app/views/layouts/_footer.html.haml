@@ -1,0 +1,22 @@
+#footer.clearfix
+  .container_16
+    .grid_3
+      %h4 Navigation
+      =navigation :bottom
+    .grid_6.suffix_1
+      %h4 About Us
+      %p RecipeTrees.com was founded, designed and developed by #{link_to 'Amanda', 'http://www.facebook.com/#!/amanda.aziz1', :target => '_blank'} and #{link_to 'Nazar Aziz', 'http://panthersoftware.com/pages/cv', :target => '_blank'}; a software developer working for  #{link_to 'Panther Software Publishing Limited', 'http://panthersoftware.com'}.
+      %p We are based in the South West of England and develop database driven business applications and websites. Panther Software Publishing was established in 2001.
+      %p Visit our #{link_to 'website', 'http://panthersoftware.com'} to know more about us, our products and our services.
+    .blogs.grid_6
+      %h4 Latest Blog Entries
+      -for blog in Blog.by_date.latest(4)
+        =render :partial => '/blogs/mini_blog', :locals => {:blog => blog}
+#footer-legal.clearfix
+  .container_16
+    .grid_16
+      %p
+        %span.copyright= link_to image_tag('http://i.creativecommons.org/l/by-nc/3.0/80x15.png'), 'http://creativecommons.org/licenses/by-nc/3.0/', :rel => 'copyright', :target => '_blank'
+        Copyright © 2001 - #{Time.now.year} #{link_to 'Panther Software Publishing Limited', 'http://panthersoftware.com'}. Developed and hosted by Panther Software Publishing Limited. All rights reserved.
+%noscript
+  #noscript This site requires Javascript

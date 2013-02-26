@@ -1,0 +1,13 @@
+- form_for @recipe, :html => {:multipart => true, :class => 'styled'}, :url => hash_for_create_branch_path(@recipe.id) do |f|
+
+  =render :partial => '/recipes/form', :locals => {:f => f}
+
+  =f.hidden_field :forked_from_id
+  =hidden_field_tag :original_recipe, @orig_recipe.id  #TODO need this?
+  -f.fields_for :recipe_forks do |fork|
+    =fork.hidden_field :from_recipe_id
+    =fork.hidden_field :forked_by_id
+
+  .action_panel.grid_16
+    =f.submit 'Fork this Recipe', :disable_with => "Please wait... might take a while.."
+    =link_to 'Cancel', recipe_path(@orig_recipe), :class => 'button'

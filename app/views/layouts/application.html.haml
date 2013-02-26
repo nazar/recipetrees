@@ -1,0 +1,23 @@
+!!!
+%html{:xmlns => "http://www.w3.org/1999/xhtml", "xmlns:og" => "http://ogp.me/ns#", "xmlns:fb" => "http://www.facebook.com/2008/fbml"}
+  %head
+    =render :partial => 'layouts/html_header'
+
+  %body
+    %noscript
+      #noscriptheader
+
+    =render :partial => 'layouts/header'
+
+
+    #contents.body
+      =display_flash
+      =yield
+
+
+    =render :partial => 'layouts/footer'
+
+    =yield(:page_end)
+    =javascript_tag "$j('input:submit, a.button').button();"
+    =render :partial => '/shared/clicky' unless rails_in_development
+    =render :partial => '/shared/ga'     unless rails_in_development

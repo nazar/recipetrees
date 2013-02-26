@@ -1,0 +1,20 @@
+%link{:rel=>"shortcut icon", :href=>"/favicon.ico"}
+%meta{"http-equiv"=>"Content-Type", :content=>"text/html;charset=utf-8"}
+
+%title= get_page_title || 'RecipeTrees.com'
+%meta{:name => 'description', :content => textile_to_text(@meta_description) || 'RecipeTrees.com is a Facebook oriented website for creating, sharing and discussing food and recipes'}
+%meta{:property => 'fb:app_id', :content => Facebook::APP_ID}
+%meta{:name => 'google-site-verification', :content => 'bN_0WFXkHDnQ52tWJa7-yzY6aWrCvhGfv993d0g3hIA'}
+
+
+=stylesheet_link_tag 'smoothness/jquery-ui-1.8.7.custom', 'stars/crystal-stars', '/javascripts/markitup/skins/simple/style.css', '/javascripts/markitup/sets/textile/style.css', :media => 'screen'
+=stylesheet_link_tag '960', 'reset', 'text', 'scaffold', 'tagit-simple-green',  'jquery.multiselect', 'jquery.multiselect.filter', 'application', :media => 'screen', :cache => 'cache/styles'
+
+=javascript_include_tag 'prototype', 'lowpro', 'behave', 'effects', 'jquery/jquery-1.4.4.min', 'jquery/jquery.qtip', 'jquery/jquery-ui', 'jquery/jquery.multiselect', 'jquery/jquery.multiselect.filter', 'markitup/jquery.markitup', 'markitup/sets/textile/set.js', 'jquery/jquery.ui.stars', 'jquery/tagit', 'jquery/jquery.qtip.styles', 'application', :cache => 'cache/scripts'
+
+/[if IE 6]
+  =javascript_include_tag 'png.js'
+  =javascript_tag("	DD_belatedPNG.fix('*');")
+
+= yield :extra_header
+= yield :jstmaplates

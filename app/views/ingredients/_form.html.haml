@@ -1,0 +1,16 @@
+=error_messages_for "ingredient"
+
+-if admin?
+  =f.label :name, "Ingredient name"
+  =f.text_field :name
+  =f.label :ingredient_group
+  =f.select :ingredient_group, Ingredient.ingredient_groups.sort{|a,b| a.last <=> b.last}.collect{|a| [a.last, a.first]}
+
+=f.label :description
+=f.text_area :description
+
+=javascript_tag "$j('#ingredient_description').markItUp(mySettings);"
+
+#images
+  =label_tag 'Recipe Image'
+  =f.file_field :image

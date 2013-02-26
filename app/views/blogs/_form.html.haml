@@ -1,0 +1,10 @@
+.grid_16
+  =error_messages_for 'blog'
+
+  =f.label :title, 'Blog Title'
+  =f.text_field :title
+
+  =f.label :body
+  =f.text_area :body
+
+  =javascript_tag "$j('#blog_body').markItUp(mySettings);"

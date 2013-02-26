@@ -1,0 +1,94 @@
+-content_for :extra_header do
+  !="<meta content='#{CGI.unescapeHTML(h(@ingredient.name))}' property='og:title'></meta>"
+  %meta{:property => 'og:type', :content => "food"}
+  %meta{:property => 'og:site_name', :content => "RecipeTrees.com"}
+  %meta{:property => 'og:image', :content => path_to_url(@ingredient.image.url(:thumbnail))}
+  -unless @ingredient.description.blank?
+    ="<meta content='#{textile_to_text(@ingredient.description)}' property='og:description'></meta>"
+
+#ingredient
+  %h1.grid_12=h @ingredient.name
+  .grid_12
+    .info_side
+      .image= image_tag @ingredient.image(:original)
+      #fb_like <fb:like href="#{ingredient_url(@ingredient)}" show_faces="true" send="true" width="380"></fb:like>
+
+    .info_main
+      .stats= render :partial => 'stats', :locals => {:ingredient => @ingredient, :links => true}
+      .description
+        =ingredient_description_or_blank(@ingredient)
+    .clear
+    -if show_adds(current_user)
+      .leader_advert advertising
+
+    #tabs
+      %ul
+        %li=link_to "Recipes(#{@ingredient.recipes.count(1)})", '#recipes'
+        -unless @related_recipes.blank?
+          %li=link_to "Related Recipes(#{@related_recipes.total_entries})", '#related_recipes'
+        %li=link_to "Related Ingredients(#{@relations.length - 1})", '#relations'
+        -if @ingredient.valid_nutrition_info
+          %li=link_to "Nutritional Information", '#nutrition'
+        %li=link_to "Comments", '#comments'
+        -#%li=link_to "Images (#{@ingredient.images_count})", '#images'
+
+      #recipes.clearfix
+        %h5 Recipes that use this ingredient
+        =will_paginate @recipes
+        -for recipe in @recipes
+          =render :partial => '/recipes/list_recipe', :locals => {:recipe => recipe}
+        =will_paginate @recipes
+
+      -unless @related_recipes.blank?
+        #related_recipes.clearfix
+          %h5 Recipes that use related ingredients
+          =will_paginate @related_recipes, :param_name => 'related_page', :params => {:anchor => 'related_recipes'}
+          -for recipe in @related_recipes
+            =render :partial => '/recipes/list_recipe', :locals => {:recipe => recipe}
+          =will_paginate @related_recipes, :param_name => 'related_page', :params => {:anchor => 'related_recipes'}
+      #relations
+        -if admin?
+          #add_relation= render :partial => '/ingredient_relations/add_from_ingredient', :locals => {:ingredient => @ingredient}
+        =render :partial => '/ingredient_relations/related_ingredients', :locals => {:current_ingredient => @ingredient, :relations => @relations}
+
+      -if @ingredient.valid_nutrition_info
+        #nutrition
+          =render :partial => '/nutritions/ingredient_nutrition', :locals => {:nutrition => @ingredient.nutrition}
+      #comments
+        <fb:comments href="#{ingredient_url(@ingredient)}" num_posts="10" width="750px"></fb:comments>
+      -#images
+        123
+
+
+  .grid_4
+    -panel(4) do
+      %ul.actions.clearfix
+        %li
+          =link_to image_tag('edit_32.png'), edit_ingredient_path(@ingredient)
+          %br
+          =link_to 'Edit', edit_ingredient_path(@ingredient)
+        -if admin?
+          %li
+            =link_to image_tag('remove_32.png'), delete_ingredient_path(@ingredient), :confirm => 'Delete ingredient?'
+            %br
+            =link_to 'Delete', delete_ingredient_path(@ingredient), :confirm => 'Delete ingredient?'
+
+
+    -panel(4) do
+      .share_it.clearfix
+        =render :partial => '/shared/share_it', :locals => {:url => ingredient_url(@ingredient)}
+
+    -if show_adds(current_user)
+      .half_banner_advert advertising
+      .half_banner_advert advertising
+      .half_banner_advert advertising
+
+
+-content_for :page_end do
+  :javascript
+    recipeImagePopups();
+    $j('#tabs').tabs();
+
+-content_for :fb_code do
+  =render :partial => '/ingredients/js_update_posts_count.js'
+

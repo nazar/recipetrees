@@ -1,0 +1,19 @@
+# See http://www.robotstxt.org/wc/norobots.html for documentation on how to use the robots.txt file
+#
+# To ban all spiders from the entire site uncomment the next two lines:
+# User-Agent: *
+# Disallow: /
+
+User-Agent: *
+Disallow: /recipes/*/edit
+Disallow: /recipes/*/print
+Disallow: /recipes/*/email
+Disallow: /recipes/*/watch
+Disallow: /recipes/*/branch
+Disallow: /recipes/*/image
+Disallow: /ingredients/*/commented
+Disallow: /recipes/*/commented
+Disallow: /profiles/*/follow
+Disallow: /branches/*/new
+Disallow: /recipes/filter
+Disallow: /ratings/vote

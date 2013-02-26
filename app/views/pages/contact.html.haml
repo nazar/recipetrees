@@ -1,0 +1,30 @@
+#contact
+  .grid_3.suffix_1
+    %h1 Contact Us
+    %p Please provide a valid email address if you wish us to contact you.
+
+  .grid_12
+    -form_tag '/contact' do
+      =text_field_tag 'contact[name]', @contact[:name], :title => 'Name'
+      =text_field_tag 'contact[email]', @contact[:email], :title => 'Email'
+      =text_area_tag 'contact[message]', @contact[:message], :title => 'Your Message'
+      .action
+        =submit_tag 'Send Message', :class => 'button'
+
+:javascript
+  $j(document).ready(function(){
+    $j('input, textarea').each(function () {
+      if ($j(this).val() == '') {
+        $j(this).val($j(this).attr('Title'));
+      }
+    }).focus(function () {
+      $j(this).removeClass('inputerror');
+      if ($j(this).val() == $j(this).attr('Title')) {
+        $j(this).val('');
+      }
+    }).blur(function () {
+      if ($j(this).val() == '') {
+        $j(this).val($j(this).attr('Title'));
+      }
+    });
+  });

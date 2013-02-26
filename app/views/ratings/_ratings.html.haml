@@ -1,0 +1,9 @@
+- ratings = {1 => 'Yucky', 2 => 'Edible', 3 => 'Not bad', 4 => 'Yummy', 5 => 'Incredible'}.sort
+#rating_container
+  -form_tag '', :id => 'rating' do
+    -for rating in ratings
+      =radio_button_tag 'rate', rating.first, rateable.average_rating.to_i == rating.first.to_i ,  {:title => rating.last}
+  .clear
+  #loader Please wait...
+Voted #{span(rateable.average_rating, :id => 'avg', :property => 'v:average')}/#{strong('5')} (#{span(rateable.ratings_count, :id => 'votes', :property => 'v:count')} votes)
+=render :partial => '/ratings/ratings_js', :locals => {:rateable => rateable}

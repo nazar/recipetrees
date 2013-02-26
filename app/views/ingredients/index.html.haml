@@ -1,0 +1,25 @@
+.grid_11.suffix_1
+  %h1= @page_title
+  #ingredient_list
+
+    -for ingredient in @ingredients
+      =render :partial => 'ingredients/ingredient', :locals => {:ingredient => ingredient}
+    -if admin?
+      =javascript_tag('hookIngredientSelects();')
+      =javascript_tag('hookIngredientAddNutrition();')
+    =will_paginate @ingredients
+
+.grid_4
+  -panel(4) do
+    %h3 Ingredient Categories
+    #ingredient_categories
+      =ingredient_category_links
+
+  -panel(4) do
+    %h3 Alphabet Filter
+    #ingredient_alphabet
+      -cache(:action => :index, :action_suffix => 'alphabet_filter') do
+        =ingredient_alphabet_list
+
+:javascript
+  ingredientImagePopups();

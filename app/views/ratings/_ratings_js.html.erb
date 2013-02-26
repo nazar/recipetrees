@@ -1,0 +1,28 @@
+<% javascript_tag do %>
+  (function($){
+			$("#rating").children().not(":radio").hide();
+
+			// Create stars
+			$("#rating").stars({
+				cancelShow: false,
+        oneVoteOnly: true,
+				callback: function(ui, type, value)
+				{
+					$("#loader").show();
+					$("#rating").fadeOut(function() //Note: IE sucks when fading 32bit PNG!
+					{
+						$.post("/ratings/vote", {rate: value, rateable_type: '<%= rateable.class.name %>', rateable_id: <%= rateable.id %> }, function(db)
+						{
+							ui.select(Math.round(db.avg));
+							$("#avg").text(db.avg);
+							$("#votes").text(db.votes);
+
+							$("#rating").fadeIn();
+							$("#loader").fadeOut();
+
+						}, "json");
+					});
+				}
+			});
+		})($j);
+<% end  %>

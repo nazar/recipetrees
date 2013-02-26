@@ -1,0 +1,5 @@
+.grid_16
+  -form_for @blog, :html => {:class => 'styled'} do |f|
+    =render :partial => '/blogs/form', :locals => {:f => f}
+    =f.submit "Update Blog"
+    =link_to 'Cancel', blog_path(@blog), :class => 'button'

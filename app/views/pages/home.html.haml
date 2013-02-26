@@ -1,0 +1,36 @@
+-content_for :extra_header do
+  %meta{:property => 'og:title', :content => "Recipe Trees"}
+  %meta{:property => 'og:description', :content => "RecipeTrees.com is a Facebook oriented website for creating, sharing and discussing food and recipes"}
+  %meta{:property => 'og:type', :content => "food"}
+  %meta{:property => 'og:site_name', :content => "RecipeTrees.com"}
+  %meta{:property => 'og:url', :content => root_url}
+
+.grid_12
+  %h1 Latest Recipes
+  .grid_6.alpha
+    -for recipe in @recipes.select{|r| (@recipes.index(r) %2) > 0 }
+      =render :partial => '/recipes/highlight', :locals => {:recipe => recipe}
+  .grid_6.omega
+    -for recipe in @recipes.select{|r| (@recipes.index(r) %2) == 0 }
+      =render :partial => '/recipes/highlight', :locals => {:recipe => recipe}
+.grid_4
+  -panel('4') do
+    %ul.actions.clearfix
+      -unless logged_in?
+        %li
+          =link_to image_tag('register_32.png'), url_for_oauth
+          %br
+          =link_to 'Join Us', url_for_oauth
+      %li
+        =link_to image_tag('add_32.png'), new_recipe_path
+        %br
+        =link_to 'Add Recipe', new_recipe_path
+      %li
+        =link_to image_tag('blog_32.png'), new_blog_path
+        %br
+        =link_to 'Add Blog', new_blog_path
+
+  -panel('4') do
+    <fb:like-box href="http://www.facebook.com/apps/application.php?id=191116444251564" width="244" show_faces="true" stream="false" header="true"></fb:like-box>
+
+= render :partial => '/shared/facebook'

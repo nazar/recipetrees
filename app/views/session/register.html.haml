@@ -1,0 +1,29 @@
+#register.grid_8
+  %h1 Register for a Free Account
+  - unless flash[:notice].blank?
+    .notice= flash[:notice]
+  - form_for @user, :url => register_path do |f|
+    %p
+      =f.label :login, 'Required Username'
+      =f.text_field :login
+    %p
+      =f.label :email
+      =f.text_field :email
+    %p
+      =f.label :password
+      =f.password_field :password
+      =f.label :password_confirmation, 'Confirm password'
+      =f.password_field :password_confirmation
+
+    %p= submit_tag 'Register'
+.grid_8
+  %h2 Why Register?
+  %ul.loud
+    %li Bookmark Recipes
+    %li Branch recipes - explanation link
+    %li more
+    %li more
+    %li more
+  %h2 Already Have an Account?
+  %ul.loud
+    %li= link_to 'Login', login_path

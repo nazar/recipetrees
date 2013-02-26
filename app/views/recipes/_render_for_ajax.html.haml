@@ -1,0 +1,7 @@
+#tip
+  .name= h(@recipe.name)
+  .image= image_tag(@recipe.image.url(:thumbnail), :class => 'thumbnail')
+  .description= truncate(h(@recipe.description), 100)
+  -#.tags= @recipe.tags
+  .clear
+  .stats=render :partial => '/recipes/stats', :locals => {:recipe => @recipe}

@@ -1,0 +1,17 @@
+!!!
+%html
+  %head
+    =render :partial => 'layouts/html_header'
+    =javascript_include_tag :defaults
+    =active_scaffold_includes
+
+
+  %body
+    =render :partial => 'layouts/header'
+
+    #contents.body.clearfix
+      .container_16
+        .body
+          .grid_16=yield
+
+    =render :partial => 'layouts/footer'

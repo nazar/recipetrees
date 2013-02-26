@@ -1,0 +1,21 @@
+.grid_11.suffix_1
+  -for blog in @blogs
+    =render :partial => '/blogs/blog', :locals => {:blog => blog, :title_links => true}
+.grid_4
+  -panel('4') do
+    %ul.actions.clearfix
+      -unless logged_in?
+        %li
+          =link_to image_tag('register_32.png'), url_for_oauth
+          %br
+          =link_to 'Join Us', url_for_oauth
+      %li
+        =link_to image_tag('blog_32.png'), new_blog_path
+        %br
+        =link_to 'Add Blog', new_blog_path
+
+  -if show_adds(current_user)
+    .half_banner_advert advertising
+    .half_banner_advert advertising
+    .half_banner_advert advertising
+

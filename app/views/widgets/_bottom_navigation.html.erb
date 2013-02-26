@@ -1,0 +1,18 @@
+<% render_navigation :bottom_menu, :separator => :none do
+
+  default_navigation
+
+  #additional stuff for footer
+
+  add_item do |i|
+    i.named span('Copyrights')
+    i.links_to '/pages/copyrights'
+  end
+
+  add_item do |i|
+    i.named span('Privacy Policy')
+    i.links_to '/pages/privacy'
+  end
+
+
+end %>

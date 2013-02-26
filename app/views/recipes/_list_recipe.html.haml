@@ -1,0 +1,23 @@
+-tag_links ||= false
+-category_link ||= false
+.recipe
+  %h2.name= link_to h(recipe.name), recipe_path(recipe)
+  .image= link_to image_tag(recipe.image.url(:thumbnail), :class => 'thumbnail', :alt => h(recipe.name)), image_recipe_path(recipe), :class => 'recipe_image_thumb'
+  .description= textile_to_text(recipe.description)
+  .categories
+    = image_tag('category.png', :title => 'categories')
+    - if category_link
+      =render_recipe_categories_for_ajax_click(recipe)
+    -else
+      =recipe.categories.collect{|c| c.name}.sort.join(', ')
+  .tags
+    =image_tag('tag.png', :title => 'tags')
+    -if tag_links
+      =render_recipe_tags_for_ajax_click(recipe.tags)
+    -else
+      =span(recipe.tags.collect{|t|h(t.name)}.sort.join(', '))
+  .stats
+    -if current_user && (current_user.id == recipe.created_by_id)
+      %span.edit
+        =link_to(image_tag('edit.png', :title => 'Edit Recipe'), edit_recipe_path(recipe))
+    =render :partial => '/recipes/stats', :locals => {:recipe => recipe}

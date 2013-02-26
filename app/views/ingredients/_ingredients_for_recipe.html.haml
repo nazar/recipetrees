@@ -1,0 +1,10 @@
+%h5 Main Ingredients
+=render :partial => '/recipe_ingredients/recipe_ingredients', :locals => {:recipe_ingredients => recipe.recipe_ingredients}
+
+- unless recipes.blank?
+  %h5 Sub Recipes
+  - recipes.sort{|a,b| a.name <=> b.name}.each do |sub_recipe|
+    -ri = recipe.recipe_ingredients.select{|ri| (ri.recipe_item_type == 'Recipe') && (ri.recipe_item_id.to_i == sub_recipe.id.to_i)}
+    -unless ri.blank?
+      %h5= recipe_ingredient_line(ri.first)
+      =render :partial => '/recipe_ingredients/recipe_ingredients', :locals => {:recipe_ingredients => sub_recipe.recipe_ingredients}

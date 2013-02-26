@@ -1,0 +1,70 @@
+-rdfa ||= false
+.nutrition
+  %table
+    %tr
+      %td.intro
+        Nutritional Values -
+        -if rdfa
+          %span{:rel => 'v:nutrition'}
+            %span{:typeof => 'v:Nutrition'}
+              =span(title, :property => 'v:servingSize')
+        -else
+          =title
+    %tr
+      %td.sep
+    %tr
+      %td
+        #{strong('Calories')}
+        -if rdfa
+          %span{:rel => 'v:nutrition'}
+            %span{:typeof => 'v:Nutrition'}
+              =span(styled_recipe_totals(recipes, :total_calories, '', ratio), :property => 'v:calories')
+        -else
+          #{styled_recipe_totals(recipes, :total_calories, '', ratio)}
+        =recipe_subtotals(recipes, :total_calories, '', ratio)
+    %tr
+      %td.sep
+    %tr
+      %td
+        #{strong('Total Fat')}
+        -if rdfa
+          %span{:rel => 'v:nutrition'}
+            %span{:typeof => 'v:Nutrition'}
+              =span(styled_recipe_totals(recipes, :total_fat, 'g', ratio), :property => 'v:fat')
+        -else
+          #{styled_recipe_totals(recipes, :total_fat, 'g', ratio) }
+        =recipe_subtotals(recipes, :total_fat, 'g', ratio)
+    %tr
+      %td.sub
+        #{strong('Saturated Fat')} #{styled_recipe_totals(recipes, :total_saturated_fat, 'g', ratio)}
+        =recipe_subtotals(recipes, :total_saturated_fat, 'g', ratio)
+    %tr.sep
+      %td
+        #{strong('Cholesterol')} #{styled_recipe_totals(recipes, :total_cholesterol, 'mg', ratio)}
+        =recipe_subtotals(recipes, :total_cholesterol, 'mg', ratio)
+    %tr.sep
+      %td
+        #{strong('Sodium')} #{styled_recipe_totals(recipes, :total_sodium, 'mg', ratio)}
+        =recipe_subtotals(recipes, :total_sodium, 'mg', ratio)
+    %tr.sep
+      %td
+        #{strong('Potassium')} #{styled_recipe_totals(recipes, :total_potassium, 'mg', ratio)}
+        =recipe_subtotals(recipes, :total_potassium, 'mg', ratio)
+    %tr.sep
+      %td
+        #{strong('Total Carbohydrate')} #{styled_recipe_totals(recipes, :total_carbohydrate, 'g', ratio)}
+        =recipe_subtotals(recipes, :total_carbohydrate, 'g', ratio)
+    %tr.sep
+      %td.sub
+        #{strong('Dietary Fiber')} #{styled_recipe_totals(recipes, :total_fiber, 'g', ratio)}
+        =recipe_subtotals(recipes, :total_fiber, 'g', ratio)
+    %tr
+      %td.sub
+        #{strong('Sugars')} #{styled_recipe_totals(recipes, :total_sugar, 'g', ratio)}
+        =recipe_subtotals(recipes, :total_sugar, 'g', ratio)
+    %tr.sep
+      %td
+        #{strong('Protein')} #{styled_recipe_totals(recipes, :total_protein, 'g', ratio)}
+        =recipe_subtotals(recipes, :total_protein, 'g', ratio)
+    %tr
+      %td.sep

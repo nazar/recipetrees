@@ -1,0 +1,10 @@
+-form_tag "/relations/add/#{ingredient.id}" do
+  %div.ui-widget
+    =label_tag 'ingredient_relation'
+    =text_field_tag 'ingredient_relation'
+    =hidden_field_tag 'ingredient_relation_id'
+  =submit_tag 'Add Relations'
+
+
+-javascript_tag do
+  $j('#ingredient_relation').autocomplete({ source: "/ingredients/get/ajax/#{ingredient.id}", minLength: 2, select: function(event, ui){ $('ingredient_relation_id').value = ui.item.id; }  });

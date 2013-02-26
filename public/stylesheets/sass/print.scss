@@ -1,0 +1,52 @@
+html {
+  background: white
+}
+body {
+  font-family: "Georgia", Times New Roman, Serif;
+  font-size: 14pt;
+	color: #000;
+	background: #fff;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+#contents {
+
+  h1 {font-size: 24pt;}
+
+  #recipe {
+    #nutrition {
+     page-break-before: always;
+    }
+    #nutrition:after{
+      content: ".";
+      display: none;
+    }
+    #nutrition_container {width: 100%;}
+    #cook{
+      .step_image {
+        padding: 0;
+        padding-left: 10px;
+        padding-bottom: 10px;
+      }
+    }
+    #ingredients{margin-top: 20px;}
+
+    .stats {width: 600px;}
+
+    .ingredient_image_hook {display: none;}
+
+  }
+
+
+
+
+}
+
+.body {
+  background: white;
+}
+

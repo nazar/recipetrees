@@ -1,0 +1,12 @@
+#header
+  #menu
+    .container-wrap
+      .container
+        #logo-wrap
+          %a{:href => root_path} Recipe Trees
+        =navigation :main_menu
+  #submenu
+    .container_16
+      .grid_16= navigation :user
+- if not logged_in?
+  =javascript_tag "hookLoginLink();"

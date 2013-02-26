@@ -1,0 +1,11 @@
+.padded
+  %h2 Signup Confirmation
+  %p Thank you for taking the time to create an account on Recipe Trees.
+  %p
+    An activation email has been dispatched to #{strong @user.email}.
+    This email will contain your activation link. Please read the activation email carefully in order to complete you account creation.
+  %p
+    A welcome email has also been dispatched to #{strong @user.email}.
+    This email will contain your registered username and password plus additional information. Please keep this email safe for future reference.
+  %p
+    %strong Please check your Spam filter or folder as the either of the activation or welcome emails could have been incorrectly flagged as spam.

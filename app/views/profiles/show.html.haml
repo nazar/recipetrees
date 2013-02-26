@@ -1,0 +1,66 @@
+#profile
+  .avatar.grid_4
+    -panel(4) do
+      =render :partial => '/users/panel_profile', :locals => {:user => @user}
+
+    -panel(4) do
+      %ul.actions.clearfix
+        %li= icon_text_button(follow_profile_path(@user), image_tag('follow_32.png', :alt => 'Follow'), 'Follow me' )
+        %li= icon_text_button("http://www.facebook.com/profile.php?id=#{@user.facebook_id}", image_tag('facebook_32.png', :alt => 'Facebook Profile'), 'Facebook Profile', :options_link => {:target => '_blank'} )
+
+    -panel(4) do
+      %h5 Stats
+      %div Joined: #{time_ago_in_words(@user.created_at)} ago
+      %div Recipes: #{@recipes.total_entries}
+      %div Badges: #{@badges.length}
+      %div Reputation: #{@user.reputation_total}
+
+
+  .details.grid_12
+    #tabs
+      %ul
+        %li=link_to "About #{@user.name}", '#about'
+        %li=link_to "Recipes(#{@recipes.total_entries})", '#recipes'
+        %li=link_to "My Tags(#{@tags.length})", '#tags'
+        %li=link_to "Followers(#{@user.following_me.length})", '#followers'
+        %li=link_to "Blogs(#{@blogs.total_entries})", '#blogs'
+        %li=link_to "Badges(#{@badges.length})", '#badges'
+        %li=link_to "Reputation", '#reputation'
+
+      #about
+        -unless @user.bio.blank?
+          %h5 About me
+          =from_textile(@user.bio)
+        -unless @stream.blank?
+          %h5 Activity Stream
+          =render :partial => '/activities/activities', :locals => {:stream => @stream}
+          =javascript_tag('recipeImageFeedPopups();')
+      #recipes
+        =will_paginate @recipes, :params => {:anchor => 'recipes'}, :param_name => 'recipe_page'
+        -for recipe in @recipes
+          =render :partial => '/recipes/list_recipe', :locals => {:recipe => recipe}
+        =will_paginate @recipes, :params => {:anchor => 'recipes'}, :param_name => 'recipe_page'
+        =javascript_tag("recipeImagePopups();")
+      #tags
+        %h4 My most commonly used tags:
+        -tag_cloud @tags, %w(css1 css2 css3 css4) do |tag, css_class|
+          = link_to h(tag.name), {:controller => 'recipes', :action => :filter, :filter => "t:#{tag.id}:#{tag.name}"}, :class => css_class, :method => :post
+      #followers
+        -if @user.following_me.blank?
+          %p Nobody is following me. Be the first to #{link_to 'follow', follow_profile_path(@user), :method => :post} me.
+        -else
+          =render :partial => '/users/mini_users', :locals => {:users => @user.following_me}
+      #blogs
+        -for blog in @blogs
+          =render :partial => '/blogs/blog', :locals => {:blog => blog, :title_links => true}
+      #badges
+        -for badge in @badges
+          =render :partial => '/achievements/achievement', :locals => {:badge => badge}
+      #reputation
+        =@graph
+
+
+
+
+-content_for :page_end do
+  =javascript_tag "$j('#tabs').tabs();"
