@@ -33,3 +33,27 @@ This also allows us to use advanced filters on our recipes based on any combinat
 ## Advanced Filtering
 
 We've talked about ingredient filtering. You are also able to further filter recipes by tags, categories (i.e BBQ recipes) and cuisines.
+
+# Technical Features
+
+**Recipe Forks**: User can fork/clone a recipe and modify it to their requirements. RecipeTrees employs an acyclic graph to define all fork relationships. An example can be seen [here](http://recipetrees.com/recipes/2_plain-basmati-rice---rice-cooker) click on the Forks tab.
+
+**Nutrition Calculator**: All ingredients are databased with an easy Admin facility where nutritional value per ingredient can be defined using [FatSecret API](http://www.fatsecret.com/). Each recipe collates all ingredients to produce a per-potion and a per-meal nutritional figures.
+
+**Recipes all the way Down**: A recipe can list another recipe as an ingredient. In such instances a per-recipe ingredient list, instructions and nutritional breakdown are provided for each recipe plus a combined total. Example [here](http://recipetrees.com/recipes/8_slow-cooked-beef-goulash).
+
+**Facebook Integration**: Uses Facebook Connect for seamless user-registrations. Also employs Facebook's comments widget.
+
+**Ingredients Database**: Lists all used ingredients but also links similar ingredients, recipes that use this and similar ingredients. See [tomato](http://recipetrees.com/ingredients/178_tomato).
+
+# Contributing
+
+Please feel free to hack away on RecipeTrees; I hope that the interwebs forks this into something interesting :)
+
+I would be truly grateful (and humbled) if you decide to send a pull request. Before you do, please open a ticket describing the issue that is being addresses.
+
+# Support
+
+RecipeTrees is released under the MIT license. Please fork and customise to your requirements.
+
+Contact me via GitHub if you require assistance in deploying a RecipeTrees fork to your server or if you require any specific modifications.
