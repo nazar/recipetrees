@@ -54,6 +54,8 @@ I would be truly grateful (and humbled) if you decide to send a pull request. Be
 
 # Support
 
+This codebase has not been updated since late 2011.
+
 RecipeTrees is released under the MIT license. Please fork and customise to your requirements.
 
 Contact me via GitHub if you require assistance in deploying a RecipeTrees fork to your server or if you require any specific modifications.
